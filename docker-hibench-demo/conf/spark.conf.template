@@ -1,0 +1,26 @@
+# Spark home
+hibench.spark.home      /usr/local/spark-1.6.2
+
+# Spark version. Supported value: spark1.6, spark2.0, spark2.1, spark2.2
+hibench.spark.version   spark1.6
+
+# Spark master
+#   standalone mode: `spark://xxx:7077`
+#   YARN mode: `yarn-client`
+#   unset: fallback to `local[1]`
+hibench.spark.master    yarn-client
+
+# executor number and cores when running on Yarn
+hibench.yarn.executor.num     spark_executors
+hibench.yarn.executor.cores   num_cores
+
+# executor and driver memory in standalone & YARN mode
+spark.executor.memory  executor_memory
+spark.driver.memory    driver_memory
+
+# set spark parallelism property according to hibench's parallelism value
+spark.default.parallelism     ${hibench.default.map.parallelism}
+
+# set spark sql's default shuffle partitions according to hibench's parallelism value
+spark.sql.shuffle.partitions  ${hibench.default.map.parallelism}
+
