@@ -37,7 +37,7 @@ ENV MAVEN_VERSION                    3.0.5
 #    Hadoop and Spark     #
 #=========================#
 ENV HADOOP_VERSION                   hadoop2
-ENV HADOOP_VERSION_DETAIL            2.6.4
+ENV HADOOP_VERSION_DETAIL            2.6.5
 ENV SPARK_VERSION                    spark1.6
 ENV SPARK_VERSION_DETAIL             1.6.2
 ENV HADOOP_FOR_SPARK_VERSION         2.6

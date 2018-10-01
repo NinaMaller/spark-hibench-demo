@@ -1,0 +1,9 @@
+   
+hibench.kmeans.biggest.num_of_clusters         5
+hibench.kmeans.biggest.dimensions              20
+hibench.kmeans.biggest.num_of_samples          250000000
+hibench.kmeans.biggest.samples_per_inputfile   40000000
+hibench.kmeans.biggest.max_iteration           5
+hibench.kmeans.biggest.k                       10
+hibench.kmeans.biggest.convergedist            0.5
+

@@ -1,0 +1,18 @@
+###############################################################################
+###                                                                         ###
+###    Welcome to the Spark on IMDT benchmarking lab!  This Docker          ###    
+###    container was spun up RIGHT NOW on an Intel Optane SSD with Intel    ###
+###    Memory Drive Technology, which allows it to have 1.4 TB of memory,   ###
+###    when there is only 192 GB of DRAM.                                   ###
+###                                                                         ###
+###    Follow the instruction to run the demo.  If you're familiar with     ###
+###    HiBench, type exit and run your own configuration on IMDT.           ###
+###    Recommended:  Do the run with all the default settings and follow    ###
+###    the memory usage on the link under "IMDT" in the configuration       ###
+###    below, or by opening another browser and typing htop. This will      ###
+###    demonstrate how IMDT is used to add memory at a reduced cost.        ###
+###                                                                         ###
+###    This is a demo only.  Container will be deleted after an hour.       ###
+###                                                                         ###
+###############################################################################
+

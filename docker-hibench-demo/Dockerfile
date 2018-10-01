@@ -20,6 +20,8 @@ FROM hibench-base
 
 USER root
 
+#USER docker
+
 #==============================
 # HADOOP Installation
 #==============================
@@ -68,16 +70,28 @@ COPY conf/mapred-site.xml ${HADOOP_CONF_DIR}/
 COPY conf/yarn-site.xml ${HADOOP_CONF_DIR}/
 COPY scripts/hadoop-env.sh ${HADOOP_CONF_DIR}/
 COPY scripts/restart_hadoop_spark.sh /usr/bin
+COPY scripts/bigger-workload /home/bigger-workload 
 
 COPY conf/hibench.conf.template  ${HIBENCH_HOME}/conf/
 COPY conf/spark.conf.template  ${HIBENCH_HOME}/conf/
+copy welcome /root/welcome
 
+RUN chmod +x /root/welcome
 RUN chmod +x /usr/bin/restart_hadoop_spark.sh
-#Copy RunExample File
-COPY scripts/runexample.sh /root/runexample.sh
+COPY scripts/runexample.sh /home/runexample.sh
 COPY scripts/start.sh /root/HiBench/start.sh
-RUN chmod +x /root/runexample.sh
+RUN chmod +x /home/runexample.sh
 RUN chmod +x /root/HiBench/start.sh
 RUN apt-get update && apt-get install -y vim
+RUN apt-get install -y htop
 
-ENTRYPOINT clear && ./root/HiBench/start.sh
+RUN mv /root/HiBench /home/HiBench
+
+ENV SPARK_HOME /usr/local/spark-${SPARK_VERSION_DETAIL}
+ENV HIBENCH_HOME /home/HiBench
+COPY scripts/change-user /home/ 
+RUN chmod +x /home/change-user
+
+#ENTRYPOINT clear &&  ./home/HiBench/start.sh && bash
+ENTRYPOINT clear && ./home/HiBench/start.sh
+

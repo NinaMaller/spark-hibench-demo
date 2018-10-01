@@ -28,4 +28,8 @@
 	   <name>dfs.datanode.data.dir</name>
 	   <value>/usr/local/hdfs/datanode</value>
 	 </property>
+         <property>
+	  <name>dfs.permissions.enabled</name>
+	  <value>false</value>
+	</property>
 </configuration>

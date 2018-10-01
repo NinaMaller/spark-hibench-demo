@@ -24,3 +24,5 @@ spark.default.parallelism     ${hibench.default.map.parallelism}
 # set spark sql's default shuffle partitions according to hibench's parallelism value
 spark.sql.shuffle.partitions  ${hibench.default.map.parallelism}
 
+spark.yarn.executor.memoryOverhead 3750
+spark.yarn.driver.memoryOverhead 1024

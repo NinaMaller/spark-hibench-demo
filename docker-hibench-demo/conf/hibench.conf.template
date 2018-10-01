@@ -3,6 +3,9 @@ hibench.scale.profile                   workload_size
 hibench.default.map.parallelism         12
 hibench.default.shuffle.parallelism     12
 
+hibench.masters.hostnames host_name
+hibench.slaves.hostnames  host_name
+
 #======================================================
 # Report files
 #======================================================
