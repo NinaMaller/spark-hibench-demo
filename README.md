@@ -1,10 +1,12 @@
-Use this repo to quickly get started with HiBench to run a Spark workload.
+See the demo at https://tryoptane.intel.com/
 
-To run, clone this repo and type
+To run the demo on your configuration, clone this repo, cd to the directory, and type:
 ```
 ./run_container.sh
 ```
+This will build the Docker image and will start the container.
 
+</br></br>
 Optional:
 Run GoTTY with more options 
 First, create an isolated network:
@@ -22,8 +24,8 @@ ps -ef | grep gotty
 kill pid
 ```
 
-Troubleshooting: if a workload does not complete, check the memory usage to see if you are out of memory. If you are, you want 
-to move docker's default /var/lib/docker to another directory.
+
+Troubleshooting: if a workload does not complete, check the memory usage to see if you are out of memory. If you are out of memory, you want to move docker's default /var/lib/docker to another directory.
 Open the file /etc/docker/daemon.json (or create if did not exists):
 vi /etc/docker/daemon.json
 Add the following lines:
