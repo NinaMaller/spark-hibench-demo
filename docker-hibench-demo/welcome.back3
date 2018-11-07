@@ -10,7 +10,9 @@
 ###                                                                      ###
 ###  To run the demo, use the default configuration for kmeans, or enter ###
 ###  your own. While the demo is running, follow the total memory usage  ###
-###  by looking at htop, or click on the Memory Usage button below.      ###
+###  by looking at htop, or click on the Memory Usage button below. The  ###
+###  memory usage button will open a new tab that will let you monitor   ###
+###  the server in more detail, including your container's usage.        ###
 ###  With IMDT, the total in memory exceeds the size of DRAM, so there   ###
 ###  is no shuffling to disk.                                            ###
 ###                                                                      ###

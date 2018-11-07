@@ -1,32 +1,121 @@
 #!/bin/bash
 
-/root/runexample.sh
+
+
+clear 
+cat /root/welcome
+printf ">>> Starting all services. Configuring your Docker container should take up to\none minute"
+
+/home/runexample.sh
+
+
+clear
+
+cat /root/welcome
+
+
+
+
+
 read -p 'Press <ENTER> now to continue with demo, or type exit to leave demo and do your own configuration:  ' -i 'continue' -e stay
 
 if [ $stay == 'exit' ]
 then
   exit
+  echo 'You can start the demo again by typing $HIBENCH_HOME/start.sh'
+  printf "\n"
 fi
 
 
 run=0
-printf "\nWelcome to the Spark demo!\n\n"
+printf "Workload: kmeans\n"
+read -p "Press <Enter> now to configure the workload" -i '   ' -e cont
 
 while true
 do
 run=$((run + 1)) # keep track of run number
-printf "Choose a workload to run. Options: wordcount, kmeans, terasort, pagerank\n"
-read -p 'Workload:  ' -i 'kmeans' -e workload
-printf "\nConfiguration of $workload (default is pre-populated)\n"
-printf "Choose a workload size. Type small for 0.32 gb, large for 3.2 gb, huge for 32 gb, or gigantic for 320 gb\n"
-read -p 'Workload size:  ' -i 'gigantic' -e size
-read -p 'Number of Spark executors:  ' -i '26' -e spark_executors
-read -p 'Number of cores per executor:  ' -i '6' -e cores
-read -p 'Memory per executor:  ' -i '12g' -e executor_memory
-read -p 'Driver memory:  ' -i '1g' -e driver_memory
+
+while true # we want the user to enter correct workload name
+do
+
+#printf "Choose a workload size. Type large for 4 million samples, huge for 0.1 billion samples, gigantic for 0.2 billion samples, or biggest for 0.25 billion samples \n"
+printf "\nChoose workload size (default is pre-populated):\n"
+#printf "Desciprtion of what to type, how many samples and approximate population of memory at most, and runtime: \n"
+printf "Below are the names of the workloads, followed by number of samples, approximate maximum memory usage, and runtime: \n"
+printf "4m (4 million samples, 5GB, 3 minutes)                     250m (250 million samples, 300GB, 17 minutes)\n"
+printf "100m (100 million samples, 110GB, 6 minutes)               350m (350 million samples, 385GB, 23 minutes)\n"
+printf "200m (200 million samples, 200GB, 9 minutes)               500m (500 million samples, 500GB, 50 minutes)\n\n"
 
 
-#echo $spark_executors
+read -p "Workload size:  " -i '200m' -e size
+
+if [ $size == '4m' ] 2>/dev/null
+then
+  size="large"
+  read -p 'Number of Spark executors:  ' -i '10' -e spark_executors
+  read -p 'Number of cores per executor:  ' -i '4' -e cores
+  read -p 'Memory per executor:  ' -i '5g' -e executor_memory
+  read -p 'Driver memory:  ' -i '1g' -e driver_memory
+  break
+
+elif [ $size == '100m' ]
+then
+  size="huge"
+  read -p 'Number of Spark executors:  ' -i '20' -e spark_executors
+  read -p 'Number of cores per executor:  ' -i '6' -e cores
+  read -p 'Memory per executor:  ' -i '12g' -e executor_memory
+  read -p 'Driver memory:  ' -i '1g' -e driver_memory
+  break
+
+elif [ $size == '200m' ] # recommended, gigantic size
+then
+  size="gigantic"
+  read -p 'Number of Spark executors:  ' -i '26' -e spark_executors
+  read -p 'Number of cores per executor:  ' -i '6' -e cores
+  read -p 'Memory per executor:  ' -i '12g' -e executor_memory
+  read -p 'Driver memory:  ' -i '1g' -e driver_memory
+  break
+
+elif [ $size == 'tiny' ] #testing purposes
+then
+  read -p 'Number of Spark executors:  ' -i '5' -e spark_executors
+  read -p 'Number of cores per executor:  ' -i '2' -e cores
+  read -p 'Memory per executor:  ' -i '5g' -e executor_memory
+  read -p 'Driver memory:  ' -i '1g' -e driver_memory
+  break
+
+elif [ $size == '250m' ] # custom workload that uses 280 GB of memory
+then
+  read -p 'Number of Spark executors:  ' -i '26' -e spark_executors
+  read -p 'Number of cores per executor:  ' -i '5' -e cores
+  read -p 'Memory per executor:  ' -i '16g' -e executor_memory
+  read -p 'Driver memory:  ' -i '1g' -e driver_memory
+  break
+
+elif [ $size == '350m' ] # custom workload that uses 280 GB of memory
+then
+  read -p 'Number of Spark executors:  ' -i '30' -e spark_executors
+  read -p 'Number of cores per executor:  ' -i '5' -e cores
+  read -p 'Memory per executor:  ' -i '15g' -e executor_memory
+  read -p 'Driver memory:  ' -i '1g' -e driver_memory
+  break
+
+elif [ $size == '500m' ] # custom workload that uses 280 GB of memory
+then
+  read -p 'Number of Spark executors:  ' -i '30' -e spark_executors
+  read -p 'Number of cores per executor:  ' -i '5' -e cores
+  read -p 'Memory per executor:  ' -i '25g' -e executor_memory
+  read -p 'Driver memory:  ' -i '1g' -e driver_memory
+  break
+
+else
+  printf "\n\n"
+  echo "Sorry, we didn't recognize this workload size. Please try again."
+  printf "\n"
+fi
+
+done # if correct config, exit while true
+
 # change configuration in config files
 rm $HIBENCH_HOME/conf/hibench.conf
 cp  $HIBENCH_HOME/conf/hibench.conf.template  $HIBENCH_HOME/conf/hibench.conf
@@ -41,36 +130,14 @@ sed -i "s/driver_memory/$driver_memory/"  $HIBENCH_HOME/conf/spark.conf
 
 # run the workload
 
-if [ $workload == 'wordcount' ]
-then
-  printf "\nRunning prepare...\n"
-  $HIBENCH_HOME/bin/workloads/micro/wordcount/prepare/prepare.sh
-  printf "\nRunning $workload\n"
-  $HIBENCH_HOME/bin/workloads/micro/wordcount/spark/run.sh
+container_id=$(cat /etc/hostname)
+  printf "\n\n
+Prepare job will run followed by the Spark job. Monitor the memory by clicking on the Memory Usage button below and\nscrolling down to the memory header. Your Docker container id is $container_id, monitor your usage by finding the\ncontainer id in the processes' table\n" 
 
-elif [ $workload == 'terasort' ]
-then
   printf "\nRunning prepare...\n"
-  $HIBENCH_HOME/bin/workloads/micro/terasort/prepare/prepare.sh
-  printf "\nRunning $workload\n"
-  $HIBENCH_HOME/bin/workloads/micro/terasort/spark/run.sh
-
-elif [ $workload == 'kmeans' ]
-then
-  printf "\nRunning prepare...\n"
-  $HIBENCH_HOME/bin/workloads/ml/kmeans/prepare/prepare.sh
-  printf "\nRunning $workload\n"
-  $HIBENCH_HOME/bin/workloads/ml/kmeans/spark/run.sh
-
-elif [ $workload == 'pagerank' ]
-then
-  printf "\nRunning prepare...\n"
-  $HIBENCH_HOME/bin/workloads/websearch/pagerank/prepare/prepare.sh
-  printf "\nRunning $workload\n"
-  $HIBENCH_HOME/bin/workloads/websearch/pagerank/spark/run.sh
-else
-  printf "We don't have that workload. Please try again."
-fi
+  $HIBENCH_HOME/bin/workloads/ml/kmeans/prepare/prepare.sh 2> /dev/null
+  printf "\nRunning kmeans...\n"
+  $HIBENCH_HOME/bin/workloads/ml/kmeans/spark/run.sh 2>/dev/null
 
 #fix the report format once!
 if [ $run == 1 ]
@@ -83,14 +150,16 @@ printf "\n\nResults:\n"
 cat $HIBENCH_HOME/report/hibench.report
 printf "\n\n\n"
 
-read -p 'Press <ENTER> now to do another demo run, or type exit to leave demo and do your own configuration:  ' -i 'continue' -e stay
+printf "Try this demo on your own machine. Clone https://github.com/NinaMaller/spark-hibench-demo.git, and run ./run-container \n(Docker is required to run the demo)\n"
 
-if [ $stay == 'exit' ]
-then
-  exit
-fi
+#printf "\nDon't forget to scroll down to see a deailed configuration of the server, and check out the videos\n"
+printf "\nInterested in finding out more? Contact us! Email optane@intel.com\n"
+
+#printf "\nYou can also run the demo again with a different configuraion."
 
 printf "\n\n"
 
+read -p "Press <Enter> now to run the demo again" -i '   ' -e cont
+printf "Workload: kmeans \n"
 done
 

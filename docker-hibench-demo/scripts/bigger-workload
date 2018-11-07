@@ -1,9 +1,28 @@
    
-hibench.kmeans.biggest.num_of_clusters         5
-hibench.kmeans.biggest.dimensions              20
-hibench.kmeans.biggest.num_of_samples          250000000
-hibench.kmeans.biggest.samples_per_inputfile   40000000
-hibench.kmeans.biggest.max_iteration           5
-hibench.kmeans.biggest.k                       10
-hibench.kmeans.biggest.convergedist            0.5
+hibench.kmeans.250m.num_of_clusters         5
+hibench.kmeans.250m.dimensions              20
+hibench.kmeans.250m.num_of_samples          250000000
+hibench.kmeans.250m.samples_per_inputfile   40000000
+hibench.kmeans.250m.max_iteration           5
+hibench.kmeans.250m.k                       10
+hibench.kmeans.250m.convergedist            0.5
+
+hibench.kmeans.350m.num_of_clusters         5
+hibench.kmeans.350m.dimensions              20
+hibench.kmeans.350m.num_of_samples          350000000
+hibench.kmeans.350m.samples_per_inputfile   40000000
+hibench.kmeans.350m.max_iteration           5
+hibench.kmeans.350m.k                       10
+hibench.kmeans.350m.convergedist            0.5
+
+hibench.kmeans.500m.num_of_clusters         5
+hibench.kmeans.500m.dimensions              20
+hibench.kmeans.500m.num_of_samples          500000000
+hibench.kmeans.500m.samples_per_inputfile   40000000
+hibench.kmeans.500m.max_iteration           5
+hibench.kmeans.500m.k                       10
+hibench.kmeans.500m.convergedist            0.5
+
+
+
 

@@ -1,0 +1,10 @@
+
+hibench.kmeans.NUMm.num_of_clusters         5
+hibench.kmeans.NUMm.dimensions              20
+hibench.kmeans.NUMm.num_of_samples          NUM000000
+hibench.kmeans.NUMm.samples_per_inputfile   40000000
+hibench.kmeans.NUMm.max_iteration           5
+hibench.kmeans.NUMm.k                       10
+hibench.kmeans.NUMm.convergedist            0.5
+
+

@@ -9,9 +9,9 @@ rm -rf /etc/hostsbak
 cat /home/bigger-workload >> $HIBENCH_HOME/conf/workloads/ml/kmeans.conf
 
 # restart all services
-printf ">>> Starting all services \n"
+#printf ">>> Starting all services \n"
+#printf "\n>>> Thank you for waiting. Configuring your Docker container should take up to one minute"
 /usr/bin/restart_hadoop_spark.sh &> /dev/null
 
-printf ">>> Done. \n\n"
 #${HIBENCH_HOME}/bin/workloads/micro/wordcount/prepare/prepare.sh
 #${HIBENCH_HOME}/bin/workloads/micro/wordcount/hadoop/run.sh

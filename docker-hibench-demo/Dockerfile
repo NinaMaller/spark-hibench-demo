@@ -90,8 +90,14 @@ RUN mv /root/HiBench /home/HiBench
 ENV SPARK_HOME /usr/local/spark-${SPARK_VERSION_DETAIL}
 ENV HIBENCH_HOME /home/HiBench
 COPY scripts/change-user /home/ 
+COPY scripts/custom-workload /home/
+RUN chmod +r /home/custom-workload
 RUN chmod +x /home/change-user
 
-#ENTRYPOINT clear &&  ./home/HiBench/start.sh && bash
-ENTRYPOINT clear && ./home/HiBench/start.sh
+RUN sed -i 's:rmr-hdfs $INPUT_HDFS:rmr-hdfs $INPUT_HDFS > /dev/null/:' $HIBENCH_HOME/bin/workloads/ml/kmeans/prepare/prepare.sh
+RUN sed -i 's:rmr-hdfs $OUTPUT_HDFS:rmr-hdfs $OUTPUT_HDFS > /dev/null/:' $HIBENCH_HOME/bin/workloads/ml/kmeans/spark/run.sh
+
+ENTRYPOINT clear &&  ./home/HiBench/start.sh && bash
+#ENTRYPOINT clear && ./home/HiBench/start.sh  
+
 
